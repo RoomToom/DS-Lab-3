@@ -1,0 +1,3 @@
+Original: ['goes', 'worlds', 'done', 'being', 'undefined']
+Stemmed: ['goe', 'world', 'done', 'be', 'undefin']
+Lemmatized: ['go', 'world', 'done', 'being', 'undefined']

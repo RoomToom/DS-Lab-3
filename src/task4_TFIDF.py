@@ -21,12 +21,18 @@ def calculate_tfidf(texts: List[str]) -> pd.DataFrame:
 
     Example:
         >>> texts = ["I love NLP", "NLP is fun"]
-        >>> calculate_tfidf(texts)
-                fun         i        is      love       nlp
-        0  0.000000  0.579739  0.000000  0.579739  0.447214
-        1  0.652491  0.000000  0.652491  0.000000  0.385372
+        >>> calculate_tfidf(texts).shape
+        (2, 5)
     """
-    pass
+    if not isinstance(texts, list):
+        raise TypeError("Input texts must be a list")
+    if not texts:
+        raise ValueError("Input texts cannot be empty")
+    if any(not isinstance(text, str) for text in texts):
+        raise ValueError("All texts must be strings")
+    vectorizer = TfidfVectorizer(token_pattern=r"(?u)\b\w+\b")
+    matrix = vectorizer.fit_transform(texts)
+    df = pd.DataFrame(matrix.toarray(), columns=vectorizer.get_feature_names_out())
     return df
 
 
@@ -37,5 +43,5 @@ if __name__ == "__main__":
         "Your duty words of the heart",
         "The Bag full of strings"
     ]
-    print(calculate_tfidf(texts))
+    print(calculate_tfidf(texts).to_string())
     

@@ -33,7 +33,25 @@ def train_word2vec(
         >>> 'nlp' in model.wv
         True
     """
-    pass
+    if not isinstance(sentences, list):
+        raise TypeError("Sentences must be a list")
+    if not sentences:
+        raise ValueError("Sentences cannot be empty")
+    if any(not isinstance(sentence, list) for sentence in sentences):
+        raise TypeError("Sentences must be a list of lists")
+    if any(not sentence or any(not isinstance(word, str) or not word.strip()
+                               for word in sentence) for sentence in sentences):
+        raise ValueError("Sentences must contain non-empty string tokens")
+    for name, value in (("vector_size", vector_size), ("window", window),
+                        ("min_count", min_count), ("workers", workers)):
+        if type(value) is not int or value < (0 if name == "min_count" else 1):
+            raise ValueError(f"Invalid {name}")
+    model = Word2Vec(vector_size=vector_size, window=window,
+                     min_count=min_count, workers=workers, seed=42)
+    model.build_vocab(sentences)
+    if not model.wv:
+        raise ValueError("No words meet min_count")
+    model.train(sentences, total_examples=model.corpus_count, epochs=model.epochs)
     return model
 
 
@@ -61,15 +79,19 @@ def find_similar_words(model: Word2Vec, word: str, topn: int = 10) -> List[Tuple
         >>> len(similar) <= 2
         True
     """
-    pass
+    if not isinstance(model, Word2Vec):
+        raise TypeError("model must be a Word2Vec model")
+    if not isinstance(word, str):
+        raise TypeError("word must be a string")
+    if type(topn) is not int or topn < 1:
+        raise ValueError("topn must be a positive integer")
+    if word not in model.wv:
+        raise KeyError(f"Word '{word}' not in vocabulary")
 
     return model.wv.most_similar(word, topn=topn)
 
 
 if __name__ == "__main__":
-    # Download required NLTK resources (only when running as main)
-    import nltk
-    nltk.download('punkt', quiet=True)
 
     # Define example sentences
     example_sentences = [

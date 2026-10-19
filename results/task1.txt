@@ -1,0 +1,1 @@
+['cleans', 'the', 'input', 'text', 'by', 'removing', 'punctuation', 'and', 'converting', 'it', 'to', 'lowercase', 'then', 'tokenizes', 'it', 'into', 'individual', 'words']

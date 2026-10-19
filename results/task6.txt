@@ -1,0 +1,5 @@
+Bigrams: [('I', 'love'), ('love', 'NLP'), ('NLP', 'and'), ('and', 'learning'), ('learning', 'NLP'), ('NLP', 'techniques')]
+
+Bigram counts: {('I', 'love'): 1, ('love', 'NLP'): 1, ('NLP', 'and'): 1, ('and', 'learning'): 1, ('learning', 'NLP'): 1, ('NLP', 'techniques'): 1}
+
+Trigrams: [('I', 'love', 'NLP'), ('love', 'NLP', 'and'), ('NLP', 'and', 'learning'), ('and', 'learning', 'NLP'), ('learning', 'NLP', 'techniques')]

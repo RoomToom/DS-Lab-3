@@ -233,14 +233,21 @@ artificial intelligence is related to nlp"""
     with col4:
         topn = st.number_input("Top N Similar Words", min_value=1, max_value=20, value=5)
     
-    if st.button("Train Word2Vec Model", key="task5"):
+    training_input = (sentences_input, vector_size, window, min_count)
+    train_clicked = st.button("Train Word2Vec Model", key="task5")
+    if train_clicked or st.session_state.get("training_input") == training_input:
         try:
             sentences = [line.strip().split() for line in sentences_input.split('\n') if line.strip()]
             
             if len(sentences) < 2:
                 st.warning("⚠️ Please enter at least 2 sentences.")
             else:
-                model = train_word2vec(sentences, vector_size=vector_size, window=window, min_count=min_count)
+                if train_clicked:
+                    st.session_state.pop("training_input", None)
+                    st.session_state.word_model = train_word2vec(
+                        sentences, vector_size=vector_size, window=window, min_count=min_count)
+                    st.session_state.training_input = training_input
+                model = st.session_state.word_model
                 
                 st.success("✅ Word2Vec model trained successfully!")
                 
@@ -349,7 +356,9 @@ Artificial intelligence is transforming technology"""
     with col3:
         ngram_max = st.number_input("Max N-gram Size", min_value=1, max_value=3, value=2)
     
-    if st.button("Run NLP Pipeline", key="task7"):
+    pipeline_input = (docs_input, use_lemmatization, ngram_max, vector_method)
+    run_clicked = st.button("Run NLP Pipeline", key="task7")
+    if run_clicked or st.session_state.get("pipeline_input") == pipeline_input:
         try:
             documents = [line.strip() for line in docs_input.split('\n') if line.strip()]
             
@@ -357,12 +366,16 @@ Artificial intelligence is transforming technology"""
                 st.warning("⚠️ Please enter at least 2 documents.")
             else:
                 with st.spinner("Processing documents..."):
-                    results = analyze_documents(
-                        documents,
-                        use_lemmatization=use_lemmatization,
-                        ngram_range=(1, ngram_max),
-                        vector_method=vector_method
-                    )
+                    if run_clicked:
+                        st.session_state.pop("pipeline_input", None)
+                        st.session_state.pipeline_results = analyze_documents(
+                            documents,
+                            use_lemmatization=use_lemmatization,
+                            ngram_range=(1, ngram_max),
+                            vector_method=vector_method
+                        )
+                        st.session_state.pipeline_input = pipeline_input
+                    results = st.session_state.pipeline_results
                 
                 st.success("✅ Pipeline completed successfully!")
                 

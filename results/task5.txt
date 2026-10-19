@@ -1,0 +1,23 @@
+Words similar to 'nlp':
+  i: 0.2154
+  deep: 0.1934
+  challenging: 0.1407
+  intelligence: 0.1283
+  is: 0.0912
+  can: 0.0777
+  to: 0.0333
+  learning: 0.0274
+  be: 0.0105
+  love: 0.0006
+
+Words similar to 'learning':
+  deep: 0.1661
+  fun: 0.1044
+  be: 0.0960
+  i: 0.0801
+  related: 0.0665
+  love: 0.0630
+  intelligence: 0.0455
+  challenging: 0.0444
+  nlp: 0.0274
+  artificial: 0.0222
